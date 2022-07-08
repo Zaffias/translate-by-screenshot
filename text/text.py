@@ -1,4 +1,4 @@
-from PIL import ImageGrab
+from PIL import Image
 import pytesseract
 from googletrans import Translator
 
@@ -6,10 +6,11 @@ from googletrans import Translator
 pytesseract.pytesseract.tesseract_cmd = r'C:/Program Files/Tesseract-OCR/tesseract.exe'
 
 def getText() -> str:
-	image = ImageGrab.grabclipboard()
+	image = Image.open('img\hola.png')
 	try:
 		result = pytesseract.image_to_string(image)
 		print(result)
+		image.close()
 		return result
 	except:
 		print("Image is not valid")

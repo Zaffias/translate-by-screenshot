@@ -3,7 +3,7 @@ import pyautogui
 import tempfile
 
 class Application():
-    def __init__(self, master):
+    def __init__(self, master: Tk):
         self.master = master
         self.rect = None
         self.x = self.y = 0
@@ -11,9 +11,6 @@ class Application():
         self.start_y = None
         self.curX = None
         self.curY = None
-
-        # root.configure(background = 'red')
-        # root.attributes("-transparentcolor","red")
 
         root.attributes("-transparent", "blue")
         root.geometry('400x50+200+200')  # set new geometry
@@ -33,10 +30,11 @@ class Application():
         self.picture_frame = Frame(self.master_screen, background = "blue")
         self.picture_frame.pack(fill=BOTH, expand=YES)
 
+    
     def takeBoundedScreenShot(self, x1, y1, x2, y2):
         with tempfile.TemporaryFile() as im:
             im = pyautogui.screenshot(region=(x1, y1, x2, y2))
-            im.save("snips/"  ".png")
+            im.save("img/hola.png")
 
     def createScreenCanvas(self):
         self.master_screen.deiconify()
@@ -54,9 +52,11 @@ class Application():
         self.master_screen.lift()
         self.master_screen.attributes("-topmost", True)
 
+    def binding(self):
+        pass
+    
     def on_button_release(self, event):
-        self.recPosition()
-
+    
         if self.start_x <= self.curX and self.start_y <= self.curY:
             print("right down")
             self.takeBoundedScreenShot(self.start_x, self.start_y, self.curX - self.start_x, self.curY - self.start_y)
@@ -98,11 +98,6 @@ class Application():
         # expand rectangle as you drag the mouse
         self.screenCanvas.coords(self.rect, self.start_x, self.start_y, self.curX, self.curY)
 
-    def recPosition(self):
-        print(self.start_x)
-        print(self.start_y)
-        print(self.curX)
-        print(self.curY)
 
 if __name__ == '__main__':
     root = Tk()
